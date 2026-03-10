@@ -1,0 +1,89 @@
+/* Styling untuk keseluruhan halaman dengan tema Langit Malam */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+    color: #e0e0e0;
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Efek Bintang Jatuh (Shooting Star) */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 2px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 10px 2px white;
+    opacity: 0;
+    animation: shootingStar 5s linear infinite;
+}
+
+@keyframes shootingStar {
+    0% { transform: translate(0, 0) rotate(-45deg) scale(0); opacity: 0; }
+    10% { opacity: 1; }
+    20% { transform: translate(-500px, 500px) rotate(-45deg) scale(1.5); opacity: 0; }
+    100% { opacity: 0; }
+}
+
+/* Container utama - Transparan & Glassmorphism */
+.card {
+    max-width: 600px;
+    margin: 40px auto;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 215, 0, 0.3); /* Border emas tipis */
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+    position: relative;
+}
+
+/* Header utama dengan warna Emas Rembulan */
+h1 {
+    color: #FFD700;
+    text-align: center;
+    font-size: 2rem;
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+    letter-spacing: 2px;
+}
+
+/* Paragraf */
+p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #d1d1d1;
+}
+
+/* Garis pemisah estetik */
+hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #FFD700, transparent);
+    margin: 20px 0;
+}
+
+/* Greeting / Footer */
+small {
+    display: block;
+    font-style: italic;
+    text-align: center;
+    color: #aaa;
+    margin-top: 15px;
+    letter-spacing: 1px;
+}
+
+/* Tambahan dekorasi simbol bulan sabit */
+.card::after {
+    content: "🌙";
+    position: absolute;
+    top: -20px;
+    right: -10px;
+    font-size: 2rem;
+    filter: drop-shadow(0 0 10px gold);
+}
