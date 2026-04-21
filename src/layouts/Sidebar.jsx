@@ -3,7 +3,6 @@ import { FaThLarge, FaList, FaHeadphones } from "react-icons/fa";
 
 export default function Sidebar() {
 
-  // class menu (aktif & tidak aktif)
   const menuClass = ({ isActive }) =>
     `flex items-center p-4 rounded-xl font-medium transition-all ${
       isActive
@@ -26,11 +25,7 @@ export default function Sidebar() {
 
           {/* Dashboard */}
           <li>
-            <NavLink
-              to="/"
-              end
-              className={menuClass}
-            >
+            <NavLink to="/" end className={menuClass}>
               <FaThLarge className="mr-4 text-xl" />
               Dashboard
             </NavLink>
@@ -38,10 +33,7 @@ export default function Sidebar() {
 
           {/* Orders */}
           <li>
-            <NavLink
-              to="/orders"
-              className={menuClass}
-            >
+            <NavLink to="/orders" className={menuClass}>
               <FaList className="mr-4 text-xl" />
               Orders
             </NavLink>
@@ -49,12 +41,32 @@ export default function Sidebar() {
 
           {/* Customers */}
           <li>
-            <NavLink
-              to="/customers"
-              className={menuClass}
-            >
+            <NavLink to="/customers" className={menuClass}>
               <FaHeadphones className="mr-4 text-xl" />
               Customers
+            </NavLink>
+          </li>
+
+          {/* 🔥 ERROR MENU */}
+          <div className="pt-6 pb-2 text-xs font-bold text-gray-400 uppercase">
+            Errors
+          </div>
+
+          <li>
+            <NavLink to="/error/400" className={menuClass}>
+              Error 400
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink to="/error/401" className={menuClass}>
+              Error 401
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink to="/error/403" className={menuClass}>
+              Error 403
             </NavLink>
           </li>
 

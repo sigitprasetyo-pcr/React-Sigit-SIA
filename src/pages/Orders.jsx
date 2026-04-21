@@ -1,48 +1,55 @@
+import { useState } from "react";
 import PageHeader from "../components/PageHeader";
-<PageHeader title="Orders" subtitle="Order List" />
+import { orders as initialData } from "../data/orders";
 
 export default function Orders() {
+  const [data, setData] = useState(initialData);
+  const [showForm, setShowForm] = useState(false);
+  const [form, setForm] = useState({});
+
+  const handleSubmit = () => {
+    setData([...data, form]);
+    setShowForm(false);
+  };
+
   return (
     <div>
-      <PageHeader />
+
+      <PageHeader title="Orders" breadcrumb={["Dashboard", "Order List"]}>
+        <button
+          onClick={() => setShowForm(!showForm)}
+          className="bg-green-500 text-white px-4 py-2 rounded-xl"
+        >
+          + Add Order
+        </button>
+      </PageHeader>
+
+      {showForm && (
+        <div className="bg-white p-4 mb-4 rounded shadow">
+          <input placeholder="Order ID" onChange={(e)=>setForm({...form,id:e.target.value})} className="border p-2 m-1"/>
+          <input placeholder="Customer Name" onChange={(e)=>setForm({...form,name:e.target.value})} className="border p-2 m-1"/>
+          <button onClick={handleSubmit} className="bg-green-500 text-white px-3 py-1">
+            Save
+          </button>
+        </div>
+      )}
 
       <div className="bg-white p-6 rounded-2xl shadow-sm">
-        <h2 className="text-lg font-semibold mb-4">Order List</h2>
-
-        <table className="w-full text-sm text-left">
-          <thead className="text-gray-500 border-b">
-            <tr>
-              <th className="py-2">Order ID</th>
-              <th>Customer</th>
-              <th>Date</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-
-          <tbody className="text-gray-700">
-            <tr className="border-b">
-              <td className="py-3">#001</td>
-              <td>John Doe</td>
-              <td>20 Apr 2026</td>
-              <td className="text-green-500 font-medium">Completed</td>
-            </tr>
-
-            <tr className="border-b">
-              <td className="py-3">#002</td>
-              <td>Jane Smith</td>
-              <td>19 Apr 2026</td>
-              <td className="text-yellow-500 font-medium">Pending</td>
-            </tr>
-
-            <tr>
-              <td className="py-3">#003</td>
-              <td>Michael Lee</td>
-              <td>18 Apr 2026</td>
-              <td className="text-red-500 font-medium">Cancelled</td>
-            </tr>
+        <table className="w-full text-sm">
+          <tbody>
+            {data.map((o,i)=>(
+              <tr key={i}>
+                <td>{o.id}</td>
+                <td>{o.name}</td>
+                <td>{o.status}</td>
+                <td>{o.price}</td>
+                <td>{o.date}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
+
     </div>
   );
 }

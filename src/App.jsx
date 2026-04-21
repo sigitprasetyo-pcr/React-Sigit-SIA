@@ -4,7 +4,7 @@ import Header from "./layouts/Header";
 import Dashboard from "./pages/Dashboard";
 import Orders from "./pages/Orders";
 import Customers from "./pages/Customers";
-import NotFound from "./pages/NotFound"; // ✅ TAMBAHAN
+import NotFound from "./pages/NotFound";
 import "./assets/tailwind.css";
 import Sidebar from "./layouts/Sidebar";
 
@@ -17,11 +17,17 @@ function App() {
         <Header />
 
         <Routes>
+          {/* MAIN PAGE */}
           <Route path="/" element={<Dashboard />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/customers" element={<Customers />} />
 
-          {/* ✅ ROUTE 404 (WAJIB PALING BAWAH) */}
+          {/* 🔥 ERROR PAGE */}
+          <Route path="/error/400" element={<NotFound />} />
+          <Route path="/error/401" element={<NotFound />} />
+          <Route path="/error/403" element={<NotFound />} />
+
+          {/* 🔥 404 WAJIB PALING BAWAH */}
           <Route path="*" element={<NotFound />} />
         </Routes>
 
