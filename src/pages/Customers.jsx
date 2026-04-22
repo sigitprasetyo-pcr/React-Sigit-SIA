@@ -14,32 +14,64 @@ export default function Customers() {
 
   return (
     <div>
-
       <PageHeader title="Customers" breadcrumb={["Dashboard", "Customer List"]}>
         <button
-          onClick={()=>setShowForm(!showForm)}
-          className="bg-green-500 text-white px-4 py-2 rounded-xl"
+          onClick={() => setShowForm(!showForm)}
+          className="btn-primary"
         >
           + Add Customer
         </button>
       </PageHeader>
 
+      {/* ✅ FORM */}
       {showForm && (
-        <div className="bg-white p-4 mb-4 rounded shadow">
-          <input placeholder="Customer ID" onChange={(e)=>setForm({...form,id:e.target.value})} className="border p-2 m-1"/>
-          <input placeholder="Name" onChange={(e)=>setForm({...form,name:e.target.value})} className="border p-2 m-1"/>
-          <button onClick={handleSubmit} className="bg-green-500 text-white px-3 py-1">
-            Save
+        <div className="card mb-4 grid grid-cols-2 gap-4">
+          <input 
+            className="input" 
+            placeholder="Customer ID"
+            onChange={(e) => setForm({ ...form, id: e.target.value })} 
+          />
+
+          <input 
+            className="input" 
+            placeholder="Name"
+            onChange={(e) => setForm({ ...form, name: e.target.value })} 
+          />
+
+          <input 
+            className="input" 
+            placeholder="Email"
+            onChange={(e) => setForm({ ...form, email: e.target.value })} 
+          />
+
+          <input 
+            className="input" 
+            placeholder="Phone"
+            onChange={(e) => setForm({ ...form, phone: e.target.value })} 
+          />
+
+          <select 
+            className="input"
+            onChange={(e) => setForm({ ...form, loyalty: e.target.value })}
+          >
+            <option>Bronze</option>
+            <option>Silver</option>
+            <option>Gold</option>
+          </select>
+
+          <button className="btn-primary col-span-2" onClick={handleSubmit}>
+            Save Customer
           </button>
         </div>
       )}
 
-      <div className="bg-white p-6 rounded-2xl shadow-sm">
+      {/* ✅ TABLE */}
+      <div className="card hover:shadow-md transition-all overflow-x-auto">
         <table className="w-full text-sm">
           <tbody>
-            {data.map((c,i)=>(
-              <tr key={i}>
-                <td>{c.id}</td>
+            {data.map((c, i) => (
+              <tr key={i} className="border-b">
+                <td className="p-3">{c.id}</td>
                 <td>{c.name}</td>
                 <td>{c.email}</td>
                 <td>{c.phone}</td>
@@ -49,7 +81,6 @@ export default function Customers() {
           </tbody>
         </table>
       </div>
-
     </div>
   );
 }

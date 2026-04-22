@@ -14,32 +14,64 @@ export default function Orders() {
 
   return (
     <div>
-
       <PageHeader title="Orders" breadcrumb={["Dashboard", "Order List"]}>
         <button
           onClick={() => setShowForm(!showForm)}
-          className="bg-green-500 text-white px-4 py-2 rounded-xl"
+          className="btn-primary"
         >
           + Add Order
         </button>
       </PageHeader>
 
+      {/* ✅ FORM */}
       {showForm && (
-        <div className="bg-white p-4 mb-4 rounded shadow">
-          <input placeholder="Order ID" onChange={(e)=>setForm({...form,id:e.target.value})} className="border p-2 m-1"/>
-          <input placeholder="Customer Name" onChange={(e)=>setForm({...form,name:e.target.value})} className="border p-2 m-1"/>
-          <button onClick={handleSubmit} className="bg-green-500 text-white px-3 py-1">
-            Save
+        <div className="card mb-4 grid grid-cols-2 gap-4">
+          <input 
+            className="input" 
+            placeholder="Order ID"
+            onChange={(e) => setForm({ ...form, id: e.target.value })} 
+          />
+
+          <input 
+            className="input" 
+            placeholder="Customer Name"
+            onChange={(e) => setForm({ ...form, name: e.target.value })} 
+          />
+
+          <select 
+            className="input"
+            onChange={(e) => setForm({ ...form, status: e.target.value })}
+          >
+            <option>Pending</option>
+            <option>Completed</option>
+            <option>Cancelled</option>
+          </select>
+
+          <input 
+            className="input" 
+            placeholder="Total Price"
+            onChange={(e) => setForm({ ...form, price: e.target.value })} 
+          />
+
+          <input 
+            type="date" 
+            className="input"
+            onChange={(e) => setForm({ ...form, date: e.target.value })} 
+          />
+
+          <button className="btn-primary col-span-2" onClick={handleSubmit}>
+            Save Order
           </button>
         </div>
       )}
 
-      <div className="bg-white p-6 rounded-2xl shadow-sm">
+      {/* ✅ TABLE */}
+      <div className="card hover:shadow-md transition-all overflow-x-auto">
         <table className="w-full text-sm">
           <tbody>
-            {data.map((o,i)=>(
-              <tr key={i}>
-                <td>{o.id}</td>
+            {data.map((o, i) => (
+              <tr key={i} className="border-b">
+                <td className="p-3">{o.id}</td>
                 <td>{o.name}</td>
                 <td>{o.status}</td>
                 <td>{o.price}</td>
@@ -49,7 +81,6 @@ export default function Orders() {
           </tbody>
         </table>
       </div>
-
     </div>
   );
 }
