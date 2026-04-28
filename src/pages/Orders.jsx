@@ -1,45 +1,83 @@
+import { useState } from "react";
 import PageHeader from "../components/PageHeader";
-<PageHeader title="Orders" subtitle="Order List" />
+import { orders as initialData } from "../data/orders";
 
 export default function Orders() {
+  const [data, setData] = useState(initialData);
+  const [showForm, setShowForm] = useState(false);
+  const [form, setForm] = useState({});
+
+  const handleSubmit = () => {
+    setData([...data, form]);
+    setShowForm(false);
+  };
+
   return (
     <div>
-      <PageHeader />
+      <PageHeader title="Orders" breadcrumb={["Dashboard", "Order List"]}>
+        <button
+          onClick={() => setShowForm(!showForm)}
+          className="btn-primary"
+        >
+          + Add Order
+        </button>
+      </PageHeader>
 
-      <div className="bg-white p-6 rounded-2xl shadow-sm">
-        <h2 className="text-lg font-semibold mb-4">Order List</h2>
+      {/* ✅ FORM */}
+      {showForm && (
+        <div className="card mb-4 grid grid-cols-2 gap-4">
+          <input 
+            className="input" 
+            placeholder="Order ID"
+            onChange={(e) => setForm({ ...form, id: e.target.value })} 
+          />
 
-        <table className="w-full text-sm text-left">
-          <thead className="text-gray-500 border-b">
-            <tr>
-              <th className="py-2">Order ID</th>
-              <th>Customer</th>
-              <th>Date</th>
-              <th>Status</th>
-            </tr>
-          </thead>
+          <input 
+            className="input" 
+            placeholder="Customer Name"
+            onChange={(e) => setForm({ ...form, name: e.target.value })} 
+          />
 
-          <tbody className="text-gray-700">
-            <tr className="border-b">
-              <td className="py-3">#001</td>
-              <td>John Doe</td>
-              <td>20 Apr 2026</td>
-              <td className="text-green-500 font-medium">Completed</td>
-            </tr>
+          <select 
+            className="input"
+            onChange={(e) => setForm({ ...form, status: e.target.value })}
+          >
+            <option>Pending</option>
+            <option>Completed</option>
+            <option>Cancelled</option>
+          </select>
 
-            <tr className="border-b">
-              <td className="py-3">#002</td>
-              <td>Jane Smith</td>
-              <td>19 Apr 2026</td>
-              <td className="text-yellow-500 font-medium">Pending</td>
-            </tr>
+          <input 
+            className="input" 
+            placeholder="Total Price"
+            onChange={(e) => setForm({ ...form, price: e.target.value })} 
+          />
 
-            <tr>
-              <td className="py-3">#003</td>
-              <td>Michael Lee</td>
-              <td>18 Apr 2026</td>
-              <td className="text-red-500 font-medium">Cancelled</td>
-            </tr>
+          <input 
+            type="date" 
+            className="input"
+            onChange={(e) => setForm({ ...form, date: e.target.value })} 
+          />
+
+          <button className="btn-primary col-span-2" onClick={handleSubmit}>
+            Save Order
+          </button>
+        </div>
+      )}
+
+      {/* ✅ TABLE */}
+      <div className="card hover:shadow-md transition-all overflow-x-auto">
+        <table className="w-full text-sm">
+          <tbody>
+            {data.map((o, i) => (
+              <tr key={i} className="border-b">
+                <td className="p-3">{o.id}</td>
+                <td>{o.name}</td>
+                <td>{o.status}</td>
+                <td>{o.price}</td>
+                <td>{o.date}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

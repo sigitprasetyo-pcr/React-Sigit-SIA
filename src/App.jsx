@@ -27,8 +27,47 @@ function App() {
         <Route path="orders" element={<Orders />} />
         <Route path="customers" element={<Customers />} />
 
-        {/* ✅ ROUTE 404 (WAJIB PALING BAWAH) */}
-        <Route path="*" element={<NotFound />} />
+        {/* MAIN PAGE */}
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/customers" element={<Customers />} />
+
+          {/* 🔥 ERROR PAGE (Sesuai Soal) */}
+          <Route
+            path="/error/400"
+            element={
+              <ErrorPage
+                code="400"
+                message="Bad Request"
+                image="https://cdn-icons-png.flaticon.com/512/564/564619.png"
+              />
+            }
+          />
+
+          <Route
+            path="/error/401"
+            element={
+              <ErrorPage
+                code="401"
+                message="Unauthorized"
+                image="https://cdn-icons-png.flaticon.com/512/564/564619.png"
+              />
+            }
+          />
+
+          <Route
+            path="/error/403"
+            element={
+              <ErrorPage
+                code="403"
+                message="Forbidden"
+                image="https://cdn-icons-png.flaticon.com/512/564/564619.png"
+              />
+            }
+          />
+
+          {/* 🔥 404 (PAKAI NotFound ATAU ErrorPage) */}
+          <Route path="*" element={<NotFound />} />
       </Route>
 
       {/* Route AuthLayout (Ditambahkan sesuai dengan tahap 2) */}
@@ -37,7 +76,10 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/forgot" element={<Forgot />} />
       </Route>
-    </Routes>
+
+          
+        </Routes>
+
   );
 }
 
