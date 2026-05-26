@@ -14,6 +14,7 @@ const Customers = React.lazy(() => import("./pages/Customers"));
 const Product = React.lazy(() => import("./pages/Product"));
 const ProductDetail = React.lazy(() => import("./pages/ProductDetail"));
 const Components = React.lazy(() => import("./pages/Components"));
+const FiturXyz = React.lazy(() => import("./pages/FiturXyz"));
 const NotFound = React.lazy(() => import("./pages/NotFound"));
 const ErrorPage = React.lazy(() => import("./pages/ErrorPage"));
 
@@ -35,6 +36,8 @@ export default function App() {
           <Route path="/products/:id" element={<ProductDetail />} />
 
           <Route path="/components" element={<Components />} />
+
+          <Route path="/fitur-xyz" element={<FiturXyz />} />
 
           <Route
             path="/error/400"

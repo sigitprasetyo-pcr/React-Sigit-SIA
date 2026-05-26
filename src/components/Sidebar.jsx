@@ -57,6 +57,13 @@ export default function Sidebar() {
               Components
             </NavLink>
           </li>
+
+           <li>
+            <NavLink to="/fitur-xyz" className={menuClass}>
+              <FaList className="mr-4 text-xl" />
+              Fitur Xyz
+            </NavLink>
+          </li>
         </ul>
       </div>
     </div>
