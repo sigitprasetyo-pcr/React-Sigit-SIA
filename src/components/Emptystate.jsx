@@ -1,5 +1,6 @@
 import { BsDatabaseExclamation } from "react-icons/bs";
 
+//membuat sebuah emptystate
 export default function EmptyState({ text = "Belum ada data" }) {
   return (
     <div className="p-8 text-center text-gray-500">
