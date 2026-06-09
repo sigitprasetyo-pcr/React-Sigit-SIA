@@ -1,5 +1,11 @@
 import { NavLink } from "react-router-dom";
-import { FaThLarge, FaList, FaHeadphones, FaUtensils } from "react-icons/fa";
+import {
+  FaThLarge,
+  FaList,
+  FaHeadphones,
+  FaUtensils,
+  FaStickyNote,
+} from "react-icons/fa";
 
 export default function Sidebar() {
   const menuClass = ({ isActive }) =>
@@ -17,9 +23,7 @@ export default function Sidebar() {
             Sedap<span className="text-green-500">.</span>
           </h1>
 
-          <p className="text-sm text-gray-400">
-            Modern Admin Dashboard
-          </p>
+          <p className="text-sm text-gray-400">Modern Admin Dashboard</p>
         </div>
 
         <ul className="space-y-3 text-gray-600">
@@ -27,13 +31,6 @@ export default function Sidebar() {
             <NavLink to="/" end className={menuClass}>
               <FaThLarge className="mr-4 text-xl" />
               Dashboard
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink to="/products" className={menuClass}>
-              <FaUtensils className="mr-4 text-xl" />
-              Products
             </NavLink>
           </li>
 
@@ -52,13 +49,27 @@ export default function Sidebar() {
           </li>
 
           <li>
+            <NavLink to="/products" className={menuClass}>
+              <FaUtensils className="mr-4 text-xl" />
+              Products
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink to="/notes" className={menuClass}>
+              <FaStickyNote className="mr-4 text-xl" />
+              Notes
+            </NavLink>
+          </li>
+
+          <li>
             <NavLink to="/components" className={menuClass}>
               <FaList className="mr-4 text-xl" />
               Components
             </NavLink>
           </li>
 
-           <li>
+          <li>
             <NavLink to="/fitur-xyz" className={menuClass}>
               <FaList className="mr-4 text-xl" />
               Fitur Xyz
