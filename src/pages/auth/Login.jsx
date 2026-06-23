@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { supabase } from "../../lib/supabase";
 
 // Import Ikon untuk Error dan Loading
 import { BsFillExclamationDiamondFill } from "react-icons/bs";
@@ -31,30 +31,21 @@ export default function Login() {
         setLoading(true);
         setError(""); // Reset error setiap kali submit ulang
 
-        axios
-            .post("https://dummyjson.com/user/login", {
-                username: dataForm.email, // API DummyJSON pakai 'username'
+        try {
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: dataForm.email,
                 password: dataForm.password,
-                expiresInMins: 30,
-            })
-            .then((response) => {
-                if (response.status !== 200) {
-                    setError(response.data.message);
-                    return;
-                }
-                // Redirect ke Dashboard jika berhasil login
-                navigate("/"); 
-            })
-            .catch((err) => {
-                if (err.response) {
-                    setError(err.response.data.message || "An error occurred");
-                } else {
-                    setError(err.message || "An unknown error occurred");
-                }
-            })
-            .finally(() => {
-                setLoading(false);
             });
+
+            if (error) throw error;
+            
+            // Redirect ke Dashboard jika berhasil login
+            navigate("/");
+        } catch (err) {
+            setError(err.message || "An unknown error occurred");
+        } finally {
+            setLoading(false);
+        }
     };
 
     /* error & loading status */
@@ -89,9 +80,9 @@ export default function Login() {
                         Email Address
                     </label>
                     <input
-                        type="text"
+                        type="email"
                         id="email"
-                        name="email" // Penting: disesuaikan dengan dataForm state
+                        name="email"
                         value={dataForm.email}
                         onChange={handleChange}
                         className="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm
@@ -107,7 +98,7 @@ export default function Login() {
                     <input
                         type="password"
                         id="password"
-                        name="password" // Penting: disesuaikan dengan dataForm state
+                        name="password"
                         value={dataForm.password}
                         onChange={handleChange}
                         className="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm

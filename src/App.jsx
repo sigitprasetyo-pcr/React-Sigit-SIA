@@ -1,10 +1,11 @@
 import React, { Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 
 import MainLayout from "./layouts/MainLayout";
 import AuthLayout from "./layouts/AuthLayout";
 
 import Loading from "./components/Loading";
+import { AuthProvider, useAuth } from "./context/AuthContext";
 
 import "./assets/tailwind.css";
 
@@ -23,66 +24,80 @@ const Login = React.lazy(() => import("./pages/auth/Login"));
 const Register = React.lazy(() => import("./pages/auth/Register"));
 const Forgot = React.lazy(() => import("./pages/auth/Forgot"));
 
+// Komponen untuk melindungi rute internal
+const ProtectedRoute = () => {
+  const { user } = useAuth();
+  
+  if (!user) {
+    // Jika tidak ada user yang login, arahkan ke login
+    return <Navigate to="/login" replace />;
+  }
+
+  return <Outlet />; // Lanjutkan ke rute anak (MainLayout)
+};
+
 export default function App() {
   return (
-    <Suspense fallback={<Loading />}>
-      <Routes>
-        <Route element={<MainLayout />}>
-          <Route path="/" element={<Dashboard />} />
+    <AuthProvider>
+      <Suspense fallback={<Loading />}>
+        <Routes>
+          {/* Rute Internal yang Dilindungi */}
+          <Route element={<ProtectedRoute />}>
+            <Route element={<MainLayout />}>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/orders" element={<Orders />} />
+              <Route path="/customers" element={<Customers />} />
+              <Route path="/products" element={<Product />} />
+              <Route path="/products/:id" element={<ProductDetail />} />
+              <Route path="/notes" element={<Notes />} />
+              <Route path="/components" element={<Components />} />
+              <Route path="/fitur-xyz" element={<FiturXyz />} />
 
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/customers" element={<Customers />} />
-
-          <Route path="/products" element={<Product />} />
-          <Route path="/products/:id" element={<ProductDetail />} />
-
-          <Route path="/notes" element={<Notes />} />
-
-          <Route path="/components" element={<Components />} />
-          <Route path="/fitur-xyz" element={<FiturXyz />} />
-
-          <Route
-            path="/error/400"
-            element={
-              <ErrorPage
-                code="400"
-                message="Bad Request"
-                image="https://cdn-icons-png.flaticon.com/512/564/564619.png"
+              <Route
+                path="/error/400"
+                element={
+                  <ErrorPage
+                    code="400"
+                    message="Bad Request"
+                    image="https://cdn-icons-png.flaticon.com/512/564/564619.png"
+                  />
+                }
               />
-            }
-          />
 
-          <Route
-            path="/error/401"
-            element={
-              <ErrorPage
-                code="401"
-                message="Unauthorized"
-                image="https://cdn-icons-png.flaticon.com/512/564/564619.png"
+              <Route
+                path="/error/401"
+                element={
+                  <ErrorPage
+                    code="401"
+                    message="Unauthorized"
+                    image="https://cdn-icons-png.flaticon.com/512/564/564619.png"
+                  />
+                }
               />
-            }
-          />
 
-          <Route
-            path="/error/403"
-            element={
-              <ErrorPage
-                code="403"
-                message="Forbidden"
-                image="https://cdn-icons-png.flaticon.com/512/564/564619.png"
+              <Route
+                path="/error/403"
+                element={
+                  <ErrorPage
+                    code="403"
+                    message="Forbidden"
+                    image="https://cdn-icons-png.flaticon.com/512/564/564619.png"
+                  />
+                }
               />
-            }
-          />
 
-          <Route path="*" element={<NotFound />} />
-        </Route>
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Route>
 
-        <Route element={<AuthLayout />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/forgot" element={<Forgot />} />
-        </Route>
-      </Routes>
-    </Suspense>
+          {/* Rute Publik / Autentikasi */}
+          <Route element={<AuthLayout />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/forgot" element={<Forgot />} />
+          </Route>
+        </Routes>
+      </Suspense>
+    </AuthProvider>
   );
 }
